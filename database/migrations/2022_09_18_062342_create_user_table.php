@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('username', 40);
             $table->string('email', 1024)->unique();
+            $table->boolean('is_active')->default(false);
+            $table->timestamp('last_seen_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

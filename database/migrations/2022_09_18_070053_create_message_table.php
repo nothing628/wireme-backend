@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('receiver_id');
             $table->string('content', 1024);
+            $table->boolean('is_readed')->default(false);
+            $table->timestamp('read_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
