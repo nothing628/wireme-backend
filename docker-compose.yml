@@ -1,0 +1,16 @@
+version: "3.5"
+services:
+  wireme_postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=wireme
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - pgsqldata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  pgsqldata:
