@@ -6,5 +6,10 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    //
+    public function listUserChat()
+    {
+        return response()->json([
+            'chats' => []
+        ]);
+    }
 }
