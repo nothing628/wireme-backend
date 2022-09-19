@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/chats', 'ChatController@listUserChat');
-    Route::get('/messages', 'MessageController@listUserMessage');
-    Route::post('/messages', 'MessageController@sendMessage');
-    Route::get('/me', 'UserController@getUserProfile');
-    Route::post('/me', 'UserController@updateUserProfile');
+Route::post('/sanctum/token', [UserController::class, 'createUserToken']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/chats', [ChatController::class, 'listUserChat']);
+    Route::get('/messages', [MessageController::class, 'listUserMessage']);
+    Route::post('/messages', [MessageController::class, 'sendMessage']);
+    Route::get('/me', [UserController::class, 'getUserProfile']);
+    Route::post('/me', [UserController::class, 'updateUserProfile']);
+    Route::post('/me/logout', [UserController::class, 'revokeUserToken']);
 });
