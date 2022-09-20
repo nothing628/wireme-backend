@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     use HasFactory;
+
+    public function participants()
+    {
+        return $this->belongsToMany(User::class, 'chat_user');
+    }
 }
