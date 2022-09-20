@@ -24,7 +24,7 @@ class InitiateChatRequest extends FormRequest
     public function rules()
     {
         return [
-            'participant' => 'required|array'
+            'participant' => 'required|array|min:2'
         ];
     }
 }
