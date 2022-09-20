@@ -15,7 +15,7 @@ class Chat extends Model
      * @var array
      */
     protected $casts = [
-        'last_seen_at' => 'timestamp',
+        'last_seen_at' => 'datetime',
         'is_archived' => 'boolean'
     ];
 

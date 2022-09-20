@@ -13,9 +13,10 @@ class ChatController extends Controller
     public function listUserChat(Request $request)
     {
         $currentUser = $request->user();
+        $chats = $currentUser->chats;
 
         return response()->json([
-            'chats' => []
+            'chats' => $chats
         ]);
     }
 
