@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Message;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -29,6 +30,16 @@ class ChatSeeder extends Seeder
         $testAnotherUser = \App\Models\User::where('email', '!=', 'test@example')->limit(1)->get();
 
         \App\Models\Chat::factory()
+            ->has(
+                Message::factory()
+                    ->setSenderAndReceiver($testUser->first()->id, $testAnotherUser->first()->id)
+                    ->count(3)
+            )
+            ->has(
+                Message::factory()
+                    ->setSenderAndReceiver($testAnotherUser->first()->id, $testUser->first()->id)
+                    ->count(3)
+            )
             ->hasAttached($testUser, [], 'participants')
             ->hasAttached($testAnotherUser, [], 'participants')
             ->create();
