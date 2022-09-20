@@ -10,8 +10,10 @@ use App\Http\Requests\InitiateChatRequest;
 
 class ChatController extends Controller
 {
-    public function listUserChat()
+    public function listUserChat(Request $request)
     {
+        $currentUser = $request->user();
+
         return response()->json([
             'chats' => []
         ]);

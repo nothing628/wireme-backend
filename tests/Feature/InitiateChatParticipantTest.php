@@ -13,6 +13,14 @@ uses(RefreshDatabase::class);
 
 beforeEach(fn () => seed(UserSeeder::class));
 
+test('initiate chat with unauthorized user', function () {
+    $testingUser = User::where('email', 'test@example.com')->first();
+    $testingParticipantUser = User::where('email', '!=', 'test@example.com')->first();
+
+    $response = postJson('/api/chats', ['participant' => [$testingUser->id, $testingParticipantUser->id]]);
+    $response->assertStatus(401);
+});
+
 test('initiate chat participant with empty request', function () {
     $testingUser = User::where('email', 'test@example.com')->first();
     actingAs($testingUser);
