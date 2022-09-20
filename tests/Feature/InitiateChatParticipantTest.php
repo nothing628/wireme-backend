@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\User;
+use App\Models\Chat;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function \Pest\Laravel\actingAs;
 use function \Pest\Laravel\postJson;
 use function \Pest\Laravel\seed;
+use function \Pest\Laravel\assertDatabaseCount;
 
 uses(RefreshDatabase::class);
 
@@ -48,4 +50,14 @@ test('correct initiate chat participant action', function () {
     $response = postJson('/api/chats', ['participant' => [$testingUser->id, $testingParticipantUser->id]]);
 
     $response->assertStatus(200);
+
+    $createdChat = Chat::first();
+
+    expect($createdChat)->toBeTruthy();
+
+    $participants = $createdChat->participants->toArray();
+    $participantsIds = $createdChat->participants->pluck('id')->toArray();
+
+    expect($participants)->toHaveLength(2);
+    expect($participantsIds)->toContain($testingUser->id, $testingParticipantUser->id);
 });
