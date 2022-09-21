@@ -24,3 +24,14 @@ test('send message with unauthorized user', function () {
     ]);
     $response->assertStatus(401);
 });
+
+test('send message to unauthorized chat', function () {
+    $testingUser = User::where('email', 'test@example.com')->first();
+
+    actingAs($testingUser);
+
+    $response = postJson("/api/chats/000/messages", [
+        'content' => fake()->words(5, true)
+    ]);
+    $response->assertStatus(400);
+});
