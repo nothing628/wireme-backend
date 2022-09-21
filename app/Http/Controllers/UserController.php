@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use App\Http\Requests\RegisterUserRequest;
 
 class UserController extends Controller
 {
@@ -50,5 +51,14 @@ class UserController extends Controller
         $user->tokens()->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function registerUser(RegisterUserRequest $request)
+    {
+        $data = $request->only(['name', 'username', 'email', 'password']);
+
+        return response()->json([
+            'user' => $data
+        ], 201);
     }
 }
