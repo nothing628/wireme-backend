@@ -26,7 +26,7 @@ Route::post('/sanctum/token', [UserController::class, 'createUserToken']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/chats', [ChatController::class, 'listUserChat']);
     Route::post('/chats', [ChatController::class, 'initiateChat']);
-    Route::get('/messages', [MessageController::class, 'listUserMessage']);
+    Route::get('/chats/{chat_id}/messages', [MessageController::class, 'listUserMessage']);
     Route::post('/messages', [MessageController::class, 'sendMessage']);
     Route::get('/me', [UserController::class, 'getUserProfile']);
     Route::post('/me', [UserController::class, 'updateUserProfile']);

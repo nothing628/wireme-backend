@@ -7,11 +7,20 @@ use App\Http\Requests\SendMessageRequest;
 
 class MessageController extends Controller
 {
-    public function listUserMessage()
+    public function listUserMessage($chat_id, Request $request)
     {
-        return response()->json([
-            'messages' => []
-        ]);
+        $currentUser = $request->user();
+        $currentChat = $currentUser->chats()->where('id', $chat_id)->first();
+
+        if ($currentChat) {
+            $messages = $currentChat->messages()->orderBy('created_at', 'desc')->limit(10)->get();
+
+            return response()->json([
+                'messages' => $messages
+            ]);
+        }
+
+        abort(404, 'Chat not found');
     }
 
     public function sendMessage(SendMessageRequest $request)
