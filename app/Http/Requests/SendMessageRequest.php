@@ -24,8 +24,6 @@ class SendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'chat_id' => 'required|integer',
-            'receiver_id' => 'required|integer',
             'content' => 'required',
         ];
     }

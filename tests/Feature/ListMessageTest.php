@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Models\Chat;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\ChatSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
