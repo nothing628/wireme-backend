@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SendMessageRequest;
+use App\Models\Message;
 
 class MessageController extends Controller
 {
@@ -29,14 +30,20 @@ class MessageController extends Controller
         $currentChat = $currentUser->chats()->where('id', $chat_id)->first();
 
         if ($currentChat) {
-            $message = $request->input('content');
+            $content = $request->input('content');
+            $message = new Message;
+            $message->chat_id = $chat_id;
+            $message->sender_id = $currentUser->id;
+            $message->content = $content;
+            $message->save();
 
             return response()->json([
                 'message' => [
-                    'id' => null,
+                    'id' => $message->id,
                     'chat_id' => $chat_id,
                     'sender_id' => $currentUser->id,
-                    'content' => $message,
+                    'content' => $content,
+                    'created_at' => $message->created_at,
                 ]
             ]);
         }

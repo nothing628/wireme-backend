@@ -53,12 +53,17 @@ test('correct send message action', function () {
             'chat_id',
             'sender_id',
             'content',
+            'created_at',
         ]
     ]);
 
+    $newMessage = $testingChat->messages()->where('content', $testingContent)->first();
+    expect($newMessage)->not->toBeNull();
     expect($response->json('message'))->toMatchArray([
+        'id' => $newMessage->id,
         'chat_id' => $testingChat->id,
         'sender_id' => $testingUser->id,
         'content' => $testingContent,
+        'created_at' =>  $newMessage->created_at->toJson(),
     ]);
 });
