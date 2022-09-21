@@ -33,12 +33,12 @@ class ChatSeeder extends Seeder
             ->has(
                 Message::factory()
                     ->setSenderAndReceiver($testUser->first()->id, $testAnotherUser->first()->id)
-                    ->count(3)
+                    ->count(30)
             )
             ->has(
                 Message::factory()
                     ->setSenderAndReceiver($testAnotherUser->first()->id, $testUser->first()->id)
-                    ->count(3)
+                    ->count(30)
             )
             ->hasAttached($testUser, [], 'participants')
             ->hasAttached($testAnotherUser, [], 'participants')
