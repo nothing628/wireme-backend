@@ -35,3 +35,30 @@ test('send message to unauthorized chat', function () {
     ]);
     $response->assertStatus(400);
 });
+
+test('correct send message action', function () {
+    $testingUser = User::where('email', 'test@example.com')->first();
+    $testingChat = $testingUser->chats->first();
+    $testingContent = fake()->words(5, true);
+
+    actingAs($testingUser);
+
+    $response = postJson("/api/chats/$testingChat->id/messages", [
+        'content' => $testingContent
+    ]);
+    $response->assertOk();
+    $response->assertJsonStructure([
+        'message' => [
+            'id',
+            'chat_id',
+            'sender_id',
+            'content',
+        ]
+    ]);
+
+    expect($response->json('message'))->toMatchArray([
+        'chat_id' => $testingChat->id,
+        'sender_id' => $testingUser->id,
+        'content' => $testingContent,
+    ]);
+});

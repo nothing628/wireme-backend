@@ -29,10 +29,15 @@ class MessageController extends Controller
         $currentChat = $currentUser->chats()->where('id', $chat_id)->first();
 
         if ($currentChat) {
-            $message = $request->all();
+            $message = $request->input('content');
 
             return response()->json([
-                'success' => true
+                'message' => [
+                    'id' => null,
+                    'chat_id' => $chat_id,
+                    'sender_id' => $currentUser->id,
+                    'content' => $message,
+                ]
             ]);
         }
 
