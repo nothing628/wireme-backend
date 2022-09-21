@@ -25,11 +25,10 @@ class MessageFactory extends Factory
         ];
     }
 
-    public function setSenderAndReceiver($sender_id, $receiver_id)
+    public function sender($sender_id)
     {
         return $this->state(fn (array $attributes) => [
             'sender_id' => $sender_id,
-            'receiver_id' => $receiver_id
         ]);
     }
 }

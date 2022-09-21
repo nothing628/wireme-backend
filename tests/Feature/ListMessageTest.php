@@ -46,7 +46,6 @@ test('correct list message action', function () {
             "*" => [
                 'id',
                 'sender_id',
-                'receiver_id',
                 'content',
                 'is_readed',
                 'read_at'
